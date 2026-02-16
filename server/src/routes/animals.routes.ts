@@ -6,4 +6,5 @@ const router = Router();
 router.get('/', animalsController.list);
 router.post('/', animalsController.create);
 
+
 export default router;
