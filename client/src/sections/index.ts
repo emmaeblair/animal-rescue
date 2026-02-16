@@ -1,0 +1,5 @@
+export { Hero } from './Hero'
+export { OurImpact } from './OurImpact'
+export { AboutSection } from './AboutSection'
+export { AnimalsSection } from './AnimalsSection'
+export { ContactSection } from './ContactSection'

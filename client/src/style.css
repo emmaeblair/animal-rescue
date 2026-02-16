@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+/* Love & Second Chances–inspired palette: warm cream, sage green, earth tones */
+:root {
+  --color-primary: #FFB20D;
+  --color-primary-dark: #FF440B;
+  --color-bg: #f7f4ef;
+  --color-bg-soft: #f0ebe3;
+  --color-text: #3d3a35;
+  --color-text-muted: #6b6560;
+  --color-footer: #3d4a38;
+  --color-border: #e5e0d8;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -7,6 +19,7 @@ body {
   margin: 0;
   font-family: system-ui, sans-serif;
   min-height: 100vh;
+  color: var(--color-text);
 }
 #root {
   min-height: 100vh;
