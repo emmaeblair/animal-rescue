@@ -1,30 +1,44 @@
-import { useEffect } from 'react'
-import { getStatuses, getAnimals } from './api'
+import { useEffect, useState } from 'react'
+import { getAnimals } from './api'
+import type { Animal } from './api'
+import { Header, Footer } from './components'
+import { Hero, OurImpact, AboutSection, AnimalsSection, ContactSection } from './sections'
 
 function App() {
+  const [animals, setAnimals] = useState<Animal[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
   useEffect(() => {
-    async function testApi() {
+    async function load() {
       try {
-        const [statuses, animals] = await Promise.all([
-          getStatuses(),
-          getAnimals(),
-        ])
-        console.log('Statuses:', statuses)
-        console.log('Animals:', animals)
+        setError(null)
+        const animalsData = await getAnimals()
+        setAnimals(animalsData)
       } catch (err) {
-        console.error('API test failed:', err)
+        setError(err instanceof Error ? err.message : 'Failed to load data')
+      } finally {
+        setLoading(false)
       }
     }
-    testApi()
+    load()
   }, [])
 
+  const availableCount = animals.filter((a) => a.status_name === 'available').length
+
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <h1 className="text-2xl font-bold text-gray-900">Animis</h1>
-      <p className="text-gray-600 mt-2">Animal rescue – scaffold ready.</p>
-      <p className="text-sm text-gray-500 mt-4">
-        Open DevTools (F12) → Console to see API test results.
-      </p>
+    <div className="min-h-screen flex flex-col bg-[var(--color-bg)]">
+      <Header />
+
+      <main className="flex-1 w-full">
+        <Hero />
+        <OurImpact availableCount={availableCount} />
+        <AboutSection />
+        <AnimalsSection animals={animals} loading={loading} error={error} />
+        <ContactSection />
+      </main>
+
+      <Footer />
     </div>
   )
 }
